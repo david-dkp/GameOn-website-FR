@@ -59,12 +59,21 @@ function validateManyChecked(checkboxes, checkCount, errorText) {
     checkboxes.forEach((checkBox) => {
         if (checkBox.target.checked) currentCheckCount++
         if (currentCheckCount > checkCount) {
-            errorText.innerHTML =
-                "Selectionnez au moins " + checkCount + "tournoi"
+            errorText.innerHTML = "Vous devez choisir une option."
+            return
         }
     })
 
     errorText.innerHTML = ""
+}
+
+function validatePassedDate(date, errorText) {
+    const nowDate = new Date()
+    if (!date || date.getTime() > nowDate.getTime()) {
+        errorText.innerHTML = "Vous devez entrer votre date de naissance."
+    } else {
+        errorText.innerHTML = ""
+    }
 }
 
 firstNameInput.addEventListener("input", (event) => {
@@ -79,6 +88,12 @@ emailInput.addEventListener("input", (event) => {
     validateStrintWithRegex(event.target.value, emailRegex, emailErrorText)
 })
 
+birthdateInput.addEventListener("input", (event) => {
+    validatePassedDate(event.target.valueAsDate, birthdateErrorText)
+})
+
 checkBoxInputs.forEach((input) => {
-    validateManyChecked(checkBoxInputs, 1, tournamentErrorText)
+    input.addEventListener("input", (event) => {
+        validateManyChecked(checkBoxInputs, 1, tournamentErrorText)
+    })
 })
