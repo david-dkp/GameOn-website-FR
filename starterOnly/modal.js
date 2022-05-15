@@ -25,75 +25,169 @@ const firstNameInput = document.querySelector("#first")
 const lastNameInput = document.querySelector("#last")
 const emailInput = document.querySelector("#email")
 const birthdateInput = document.querySelector("#birthdate")
-const checkBoxInputs = document.querySelectorAll(".checkbox-input")
+const checkBoxInputs = document.querySelectorAll(
+    ".checkbox-input input[name='identifiant']"
+)
+const conditionscheckBoxInput = document.querySelector("#checkbox1")
 
-const firstNameErrorText = document.querySelector(".name-error")
-const lastNameErrorText = document.querySelector(".lastname-error")
-const emailErrorText = document.querySelector(".email-error")
-const birthdateErrorText = document.querySelector(".birthdate-error")
-const tournamentErrorText = document.querySelector(".tournament-error")
+const firstNameErrorTextElement = document.querySelector(".name-error")
+const lastNameErrorTextElement = document.querySelector(".lastname-error")
+const emailErrorTextElement = document.querySelector(".email-error")
+const birthdateErrorTextElement = document.querySelector(".birthdate-error")
+const tournamentErrorTextElement = document.querySelector(".tournament-error")
+const conditionsErrorTextElement = document.querySelector(".conditions-error")
 
 function validateStringNotEmpty(string, errorText) {
     if (!string || string.length < 2) {
-        errorText.innerHTML =
-            "Veuillez entrer 2 caractères ou plus pour le champ du nom."
+        return errorText
     } else {
-        errorText.innerHTML = ""
+        return null
     }
 }
 
 const emailRegex =
     /^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@[a-zA-Z0-9-]+(?:\. [a-zA-Z0-9-]+)*$/
 
-function validateStrintWithRegex(string, emailRegex, errorText) {
-    if (!string.match(emailRegex)) {
-        errorText.innerHTML = "Veuillez entrer une adresse e-mail valide."
+function validateStrintWithRegex(string, regex, errorText) {
+    if (!string.match(regex)) {
+        return errorText
     } else {
-        errorText.innerHTML = ""
+        return null
     }
 }
 
-function validateManyChecked(checkboxes, checkCount, errorText) {
+function validateMinCheckedCount(checkboxes, checkCount, errorText) {
     let currentCheckCount = 0
 
     checkboxes.forEach((checkBox) => {
-        if (checkBox.target.checked) currentCheckCount++
-        if (currentCheckCount > checkCount) {
-            errorText.innerHTML = "Vous devez choisir une option."
-            return
-        }
+        if (checkBox.checked) currentCheckCount++
     })
-
-    errorText.innerHTML = ""
+    if (currentCheckCount < checkCount) {
+        return errorText
+    } else {
+        return null
+    }
 }
 
 function validatePassedDate(date, errorText) {
     const nowDate = new Date()
     if (!date || date.getTime() > nowDate.getTime()) {
-        errorText.innerHTML = "Vous devez entrer votre date de naissance."
+        return errorText
     } else {
-        errorText.innerHTML = ""
+        return null
+    }
+}
+
+const firstNameErrorText =
+    "Veuillez entrer 2 caractères ou plus pour le champ du prénom."
+
+function validateFirstName() {
+    const errorText = validateStringNotEmpty(
+        firstNameInput.value,
+        firstNameErrorText
+    )
+    if (errorText) {
+        firstNameErrorTextElement.innerHTML = errorText
+    } else {
+        firstNameErrorTextElement.innerHTML = ""
+    }
+}
+
+const lastNameErrorText =
+    "Veuillez entrer 2 caractères ou plus pour le champ du nom."
+
+function validateLastName() {
+    const errorText = validateStringNotEmpty(
+        lastNameInput.value,
+        lastNameErrorText
+    )
+    if (errorText) {
+        lastNameErrorTextElement.innerHTML = errorText
+    } else {
+        lastNameErrorTextElement.innerHTML = ""
+    }
+}
+
+const emailErrorText = "Veuillez entrer une adresse e-mail valide."
+
+function validateEmail() {
+    const errorText = validateStrintWithRegex(
+        emailInput.value,
+        emailRegex,
+        emailErrorText
+    )
+    if (errorText) {
+        emailErrorTextElement.innerHTML = errorText
+    } else {
+        emailErrorTextElement.innerHTML = ""
+    }
+}
+
+const birthdateErrorText = "Vous devez entrer votre date de naissance."
+
+function validateBirthdate() {
+    const errorText = validatePassedDate(
+        birthdateInput.valueAsDate,
+        birthdateErrorText
+    )
+    if (errorText) {
+        birthdateErrorTextElement.innerHTML = errorText
+    } else {
+        birthdateErrorTextElement.innerHTML = ""
+    }
+}
+
+const tournamentsErrorText = "Vous devez choisir une option."
+
+function validateTournaments() {
+    const errorText = validateMinCheckedCount(
+        checkBoxInputs,
+        1,
+        tournamentsErrorText
+    )
+    if (errorText) {
+        tournamentErrorTextElement.innerHTML = errorText
+    } else {
+        tournamentErrorTextElement.innerHTML = ""
+    }
+}
+
+const conditionsErrorText =
+    "Vous devez vérifier que vous acceptez les termes et conditions."
+
+function validateConditions() {
+    const errorText = validateMinCheckedCount(
+        [conditionscheckBoxInput],
+        1,
+        conditionsErrorText
+    )
+    if (errorText) {
+        conditionsErrorTextElement.innerHTML = errorText
+    } else {
+        conditionsErrorTextElement.innerHTML = ""
     }
 }
 
 firstNameInput.addEventListener("input", (event) => {
-    validateStringNotEmpty(event.target.value, firstNameErrorText)
+    validateFirstName()
 })
 
 lastNameInput.addEventListener("input", (event) => {
-    validateStringNotEmpty(event.target.value, lastNameErrorText)
+    validateLastName()
 })
 
 emailInput.addEventListener("input", (event) => {
-    validateStrintWithRegex(event.target.value, emailRegex, emailErrorText)
+    validateEmail()
 })
 
 birthdateInput.addEventListener("input", (event) => {
-    validatePassedDate(event.target.valueAsDate, birthdateErrorText)
+    validateBirthdate()
 })
 
 checkBoxInputs.forEach((input) => {
-    input.addEventListener("input", (event) => {
-        validateManyChecked(checkBoxInputs, 1, tournamentErrorText)
-    })
+    validateTournaments()
+})
+
+conditionscheckBoxInput.addEventListener("input", (event) => {
+    validateConditions()
 })
