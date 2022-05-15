@@ -25,8 +25,8 @@ const firstNameInput = document.querySelector("#first")
 const lastNameInput = document.querySelector("#last")
 const emailInput = document.querySelector("#email")
 const birthdateInput = document.querySelector("#birthdate")
-const checkBoxInputs = document.querySelectorAll(
-    ".checkbox-input input[name='identifiant']"
+const tournamentsCheckboxesInputs = document.querySelectorAll(
+    "input[name='location'].checkbox-input"
 )
 const conditionscheckBoxInput = document.querySelector("#checkbox1")
 
@@ -88,8 +88,10 @@ function validateFirstName() {
     )
     if (errorText) {
         firstNameErrorTextElement.innerHTML = errorText
+        return false
     } else {
         firstNameErrorTextElement.innerHTML = ""
+        return true
     }
 }
 
@@ -103,8 +105,10 @@ function validateLastName() {
     )
     if (errorText) {
         lastNameErrorTextElement.innerHTML = errorText
+        return false
     } else {
         lastNameErrorTextElement.innerHTML = ""
+        return true
     }
 }
 
@@ -118,8 +122,10 @@ function validateEmail() {
     )
     if (errorText) {
         emailErrorTextElement.innerHTML = errorText
+        return false
     } else {
         emailErrorTextElement.innerHTML = ""
+        return true
     }
 }
 
@@ -132,8 +138,10 @@ function validateBirthdate() {
     )
     if (errorText) {
         birthdateErrorTextElement.innerHTML = errorText
+        return false
     } else {
         birthdateErrorTextElement.innerHTML = ""
+        return true
     }
 }
 
@@ -141,14 +149,16 @@ const tournamentsErrorText = "Vous devez choisir une option."
 
 function validateTournaments() {
     const errorText = validateMinCheckedCount(
-        checkBoxInputs,
+        tournamentsCheckboxesInputs,
         1,
         tournamentsErrorText
     )
     if (errorText) {
         tournamentErrorTextElement.innerHTML = errorText
+        return false
     } else {
         tournamentErrorTextElement.innerHTML = ""
+        return true
     }
 }
 
@@ -163,31 +173,61 @@ function validateConditions() {
     )
     if (errorText) {
         conditionsErrorTextElement.innerHTML = errorText
+        return false
     } else {
         conditionsErrorTextElement.innerHTML = ""
+        return true
     }
 }
 
-firstNameInput.addEventListener("input", (event) => {
+firstNameInput.addEventListener("input", () => {
     validateFirstName()
 })
 
-lastNameInput.addEventListener("input", (event) => {
+lastNameInput.addEventListener("input", () => {
     validateLastName()
 })
 
-emailInput.addEventListener("input", (event) => {
+emailInput.addEventListener("input", () => {
     validateEmail()
 })
 
-birthdateInput.addEventListener("input", (event) => {
+birthdateInput.addEventListener("input", () => {
     validateBirthdate()
 })
 
-checkBoxInputs.forEach((input) => {
-    validateTournaments()
+tournamentsCheckboxesInputs.forEach((input) => {
+    input.addEventListener("input", () => {
+        validateTournaments()
+    })
 })
 
-conditionscheckBoxInput.addEventListener("input", (event) => {
+conditionscheckBoxInput.addEventListener("input", () => {
     validateConditions()
 })
+
+const fieldsValidators = [
+    validateFirstName,
+    validateLastName,
+    validateEmail,
+    validateBirthdate,
+    validateTournaments,
+    validateConditions,
+]
+
+function validateAllFields() {
+    let hasError = false
+    for (const validator of fieldsValidators) {
+        const isFieldValid = validator()
+
+        if (!isFieldValid) {
+            hasError = true
+        }
+    }
+
+    return !hasError
+}
+
+function validate() {
+    return validateAllFields()
+}
