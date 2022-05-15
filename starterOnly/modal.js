@@ -20,6 +20,16 @@ function launchModal() {
     modalbg.style.display = "block"
 }
 
+function closeModal() {
+    modalbg.style.display = "none"
+}
+
+const closeButton = document.querySelector(".close")
+
+closeButton.onclick = () => {
+    closeModal()
+}
+
 //inputs
 const firstNameInput = document.querySelector("#first")
 const lastNameInput = document.querySelector("#last")
