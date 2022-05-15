@@ -25,6 +25,7 @@ const firstNameInput = document.querySelector("#first")
 const lastNameInput = document.querySelector("#last")
 const emailInput = document.querySelector("#email")
 const birthdateInput = document.querySelector("#birthdate")
+const tournamentsQuantityInput = document.querySelector("#quantity")
 const tournamentsCheckboxesInputs = document.querySelectorAll(
     "input[name='location'].checkbox-input"
 )
@@ -34,6 +35,9 @@ const firstNameErrorTextElement = document.querySelector(".name-error")
 const lastNameErrorTextElement = document.querySelector(".lastname-error")
 const emailErrorTextElement = document.querySelector(".email-error")
 const birthdateErrorTextElement = document.querySelector(".birthdate-error")
+const tournamentsQuantityErrorTextElement = document.querySelector(
+    ".tournaments-quantity-error"
+)
 const tournamentErrorTextElement = document.querySelector(".tournament-error")
 const conditionsErrorTextElement = document.querySelector(".conditions-error")
 
@@ -45,11 +49,18 @@ function validateStringNotEmpty(string, errorText) {
     }
 }
 
-const emailRegex =
-    /^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@[a-zA-Z0-9-]+(?:\. [a-zA-Z0-9-]+)*$/
+const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 
-function validateStrintWithRegex(string, regex, errorText) {
+function validateStringWithRegex(string, regex, errorText) {
     if (!string.match(regex)) {
+        return errorText
+    } else {
+        return null
+    }
+}
+
+function validateMinNumber(num, min, errorText) {
+    if (!num || num < min) {
         return errorText
     } else {
         return null
@@ -115,7 +126,7 @@ function validateLastName() {
 const emailErrorText = "Veuillez entrer une adresse e-mail valide."
 
 function validateEmail() {
-    const errorText = validateStrintWithRegex(
+    const errorText = validateStringWithRegex(
         emailInput.value,
         emailRegex,
         emailErrorText
@@ -141,6 +152,23 @@ function validateBirthdate() {
         return false
     } else {
         birthdateErrorTextElement.innerHTML = ""
+        return true
+    }
+}
+
+const tournamentsQuantityErrorText = "Veuillez saisir une valeur numérique."
+
+function validateTournamentsQuantity() {
+    const errorText = validateMinNumber(
+        tournamentsQuantityInput.value,
+        0,
+        tournamentsQuantityErrorText
+    )
+    if (errorText) {
+        tournamentsQuantityErrorTextElement.innerHTML = errorText
+        return false
+    } else {
+        tournamentsQuantityErrorTextElement.innerHTML = ""
         return true
     }
 }
@@ -196,6 +224,10 @@ birthdateInput.addEventListener("input", () => {
     validateBirthdate()
 })
 
+tournamentsQuantityInput.addEventListener("input", () => {
+    validateTournamentsQuantity()
+})
+
 tournamentsCheckboxesInputs.forEach((input) => {
     input.addEventListener("input", () => {
         validateTournaments()
@@ -213,6 +245,7 @@ const fieldsValidators = [
     validateBirthdate,
     validateTournaments,
     validateConditions,
+    validateTournamentsQuantity,
 ]
 
 function validateAllFields() {
