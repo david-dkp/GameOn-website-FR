@@ -229,5 +229,10 @@ function validateAllFields() {
 }
 
 function validate() {
-    return validateAllFields()
+    if (validateAllFields()) {
+        alert("Merci ! Votre réservation a été reçue.")
+        return true
+    } else {
+        return false
+    }
 }
