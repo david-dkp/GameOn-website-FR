@@ -20,10 +20,12 @@ function launchModal() {
     modalbg.style.display = "block"
 }
 
+// close modal form
 function closeModal() {
     modalbg.style.display = "none"
 }
 
+// add onclick listener to the modal's close button.
 const closeButton = document.querySelector(".close")
 
 closeButton.onclick = () => {
@@ -41,6 +43,7 @@ const tournamentsCheckboxesInputs = document.querySelectorAll(
 )
 const conditionscheckBoxInput = document.querySelector("#checkbox1")
 
+//inputs' error element
 const firstNameErrorTextElement = document.querySelector(".name-error")
 const lastNameErrorTextElement = document.querySelector(".lastname-error")
 const emailErrorTextElement = document.querySelector(".email-error")
@@ -50,6 +53,12 @@ const tournamentsQuantityErrorTextElement = document.querySelector(
 )
 const tournamentErrorTextElement = document.querySelector(".tournament-error")
 const conditionsErrorTextElement = document.querySelector(".conditions-error")
+
+/*
+Here are validators:
+    - if there is an error, returns a string describing the error
+    - if there is NOT an error, returns null
+*/
 
 function validateStringNotEmpty(string, errorText) {
     if (!string || string.length < 2) {
@@ -98,6 +107,10 @@ function validatePassedDate(date, errorText) {
         return null
     }
 }
+
+/*
+    Here are the methods that validates each fields of the form
+*/
 
 const firstNameErrorText =
     "Veuillez entrer 2 caractères ou plus pour le champ du prénom."
@@ -218,6 +231,7 @@ function validateConditions() {
     }
 }
 
+//Listen to each fields change, and run their validation in real time
 firstNameInput.addEventListener("input", () => {
     validateFirstName()
 })
@@ -258,6 +272,7 @@ const fieldsValidators = [
     validateTournamentsQuantity,
 ]
 
+//Run validation of each fields at once
 function validateAllFields() {
     let hasError = false
     for (const validator of fieldsValidators) {
@@ -271,6 +286,10 @@ function validateAllFields() {
     return !hasError
 }
 
+/*
+    Called when we submit the form, we double check the validations,
+    and if there's an error, the errors will be shown.
+*/
 function validate() {
     if (validateAllFields()) {
         alert("Merci ! Votre réservation a été reçue.")
