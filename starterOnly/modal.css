@@ -79,7 +79,7 @@ img {
         justify-content: space-between;
         align-items: center;
         margin: 0;
-        padding: 3.5%;
+        padding: 10px;
         position: fixed;
         right: 0;
         left: 0;
@@ -116,6 +116,10 @@ img {
         background-color: white;
         position: absolute;
         right: 0;
+    }
+
+    .bground .content {
+        margin-top: 77px;
     }
 }
 
