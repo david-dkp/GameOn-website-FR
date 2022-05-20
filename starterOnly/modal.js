@@ -306,6 +306,7 @@ function validate() {
     return validateAllFields()
 }
 
+//If there's a 'showConfirmationDialog' query parameter to true, then show the confirmation dialog
 function showConfirmationDialogIfNeeded() {
     const params = new Proxy(new URLSearchParams(window.location.search), {
         get: (searchParams, prop) => searchParams.get(prop),
