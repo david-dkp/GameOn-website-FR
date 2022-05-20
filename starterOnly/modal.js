@@ -8,29 +8,40 @@ function editNav() {
 }
 
 // DOM Elements
-const modalbg = document.querySelector(".bground")
+const signupModal = document.querySelector(".signup-modal")
+const signupForm = document.querySelector(".modal-body form")
 const modalBtn = document.querySelectorAll(".modal-btn")
 const formData = document.querySelectorAll(".formData")
+const thankingModal = document.querySelector(".thanking-modal")
+const signupCloseButton = document.querySelector(".signup-close")
+const thankingCloseButton = document.querySelectorAll(".thanking-close")
 
 // launch modal event
-modalBtn.forEach((btn) => btn.addEventListener("click", launchModal))
+modalBtn.forEach((btn) =>
+    btn.addEventListener("click", () => launchModal(signupModal))
+)
 
 // launch modal form
-function launchModal() {
-    modalbg.style.display = "block"
+function launchModal(modalElement) {
+    modalElement.style.display = "block"
 }
 
 // close modal form
-function closeModal() {
-    modalbg.style.display = "none"
+function closeModal(modalElement) {
+    modalElement.style.display = "none"
 }
 
 // add onclick listener to the modal's close button.
-const closeButton = document.querySelector(".close")
-
-closeButton.onclick = () => {
-    closeModal()
+signupCloseButton.onclick = () => {
+    closeModal(signupModal)
 }
+
+thankingCloseButton.forEach(
+    (closeButton) =>
+        (closeButton.onclick = () => {
+            closeModal(thankingModal)
+        })
+)
 
 //inputs
 const firstNameInput = document.querySelector("#first")
@@ -290,11 +301,20 @@ function validateAllFields() {
     Called when we submit the form, we double check the validations,
     and if there's an error, the errors will be shown.
 */
+
 function validate() {
-    if (validateAllFields()) {
-        alert("Merci ! Votre réservation a été reçue.")
-        return true
-    } else {
-        return false
+    return validateAllFields()
+}
+
+function showConfirmationDialogIfNeeded() {
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+    })
+    const showConfirmationDialog = Boolean(params.showConfirmationDialog)
+
+    if (showConfirmationDialog) {
+        launchModal(thankingModal)
     }
 }
+
+showConfirmationDialogIfNeeded()

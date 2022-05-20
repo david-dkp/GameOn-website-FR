@@ -118,8 +118,17 @@ img {
         right: 0;
     }
 
+    .bground {
+        top: 77px !important;
+        padding: 0;
+        margin: 0;
+        bottom: 0;
+        height: auto !important;
+    }
+
     .bground .content {
-        margin-top: 77px;
+        margin: 0 auto;
+        min-height: auto;
     }
 }
 
@@ -550,4 +559,20 @@ footer {
 .error-text {
     color: red;
     font-size: 1rem;
+}
+
+.thanking-modal .content {
+    height: 100%;
+    padding-bottom: 10px;
+}
+
+.thanking-modal .modal-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.thanking-modal .modal-body p {
+    margin-block: auto;
+    text-align: center;
 }
