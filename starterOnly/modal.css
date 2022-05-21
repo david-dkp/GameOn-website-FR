@@ -72,66 +72,6 @@ img {
     display: none;
 }
 
-@media screen and (max-width: 768px) {
-    .topnav,
-    .topnav.responsive {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 0;
-        padding: 10px;
-        position: fixed;
-        right: 0;
-        left: 0;
-        z-index: 13493;
-        background-color: white;
-    }
-
-    .header-logo img {
-        width: 200px;
-    }
-
-    .topnav a {
-        display: none;
-    }
-    .topnav a.icon {
-        float: right;
-        display: block;
-        color: red;
-    }
-
-    .topnav.responsive a {
-        float: none;
-        display: flex;
-        text-align: left;
-    }
-
-    .main-navbar {
-        position: relative;
-    }
-
-    .menu-list {
-        top: 50px;
-        box-shadow: 0px 0px 10px 1px grey;
-        background-color: white;
-        position: absolute;
-        right: 0;
-    }
-
-    .bground {
-        top: 77px !important;
-        padding: 0;
-        margin: 0;
-        bottom: 0;
-        height: auto !important;
-    }
-
-    .bground .content {
-        margin: 0 auto;
-        min-height: auto;
-    }
-}
-
 main {
     font-size: 130%;
     font-weight: bolder;
@@ -543,6 +483,90 @@ footer {
     .copyrights {
         margin-top: 50px;
         text-align: center;
+    }
+
+    .header-logo img {
+        width: 150px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .topnav,
+    .topnav.responsive {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0;
+        padding: 10px;
+        position: fixed;
+        right: 0;
+        left: 0;
+        z-index: 13493;
+        background-color: white;
+    }
+
+    .header-logo img {
+        width: 125px;
+    }
+
+    .hero-content {
+        min-width: unset;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .hero-section {
+        padding-top: 50px;
+    }
+
+    .hero-headline {
+        align-self: center;
+        font-size: 2rem;
+    }
+
+    .hero-text {
+        font-size: 1rem;
+        margin-top: 20px;
+    }
+
+    .topnav a {
+        display: none;
+    }
+    .topnav a.icon {
+        float: right;
+        display: block;
+        color: red;
+    }
+
+    .topnav.responsive a {
+        float: none;
+        display: flex;
+        text-align: left;
+    }
+
+    .main-navbar {
+        position: relative;
+    }
+
+    .menu-list {
+        top: 50px;
+        box-shadow: 0px 0px 10px 1px grey;
+        background-color: white;
+        position: absolute;
+        right: 0;
+    }
+
+    .bground {
+        top: 77px;
+        padding: 0;
+        margin: 0;
+        bottom: 0;
+        height: auto;
+    }
+
+    .bground .content {
+        margin: 0 auto;
+        min-height: auto;
     }
 }
 
